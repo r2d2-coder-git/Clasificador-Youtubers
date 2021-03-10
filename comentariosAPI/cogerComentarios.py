@@ -1,5 +1,5 @@
 #Especificar fichero de credenciales.
-CLIENT_SECRETS_FILE = "credencialesAPI.json"
+CLIENT_SECRETS_FILE = "comentariosAPI/credencialesAPI.json"
 
 #Determinar alcance de acceso
 SCOPES = ["https://www.googleapis.com/auth/youtube",
@@ -48,12 +48,14 @@ def get_authenticated_service():
 def coger_id_upload(conn,tipo_id):
     search_channel_name = ""
     channels_response=""
+    id_user =""
     if tipo_id == 'u':
         search_channel_name = input('Introduce el usuario: ')
         channels_response = conn.channels().list(
         forUsername=search_channel_name,
         part="contentDetails"
         ).execute()
+        search_channel_name = channels_response['items'][0]['id']
     elif tipo_id == 'i':
         search_channel_name = input('Introduce el id del canal: ')
         channels_response = conn.channels().list(
@@ -63,7 +65,16 @@ def coger_id_upload(conn,tipo_id):
     else: 
         print('Tipo de identificador no soportado.')
         return None
-    return channels_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+    ##Cogemos todas las playlist del canal y cogemos aquella que incluye todas las subidas del usuario.
+    return search_channel_name,channels_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+
+#Función para coger la categoría de un canal
+def categoria_canal (conn, id_canal):
+    res = channels_response = conn.channels().list(
+        id=id_canal,
+        part="topicDetails"
+        ).execute()
+    return res['items'][0]['topicDetails']['topicCategories']
 
 #Función para coger los últimos num_videos por medio del identificador de subidas del canal de youtube.
 def coger_videos(conn, playlist_id, num_videos):
@@ -85,6 +96,7 @@ def coger_comentarios(conn,id_videos):
     comentarios_aux = []
     comentarios = []
     next_page_token = None
+    
     for id_video in id_videos:
         results = conn.commentThreads().list(part = 'snippet', videoId = id_video, textFormat = 'plainText').execute()
         while results:
@@ -100,31 +112,46 @@ def coger_comentarios(conn,id_videos):
                 break
         comentarios.append(comentarios_aux)
         comentarios_aux = []
-
+    
     return dict(zip(id_videos, comentarios))
+
+"""
+def info_videos (conn, id_videos):
+    for id_video in id_videos:
+        results = conn.videos().list(part = 'snippet', id = id_video).execute()
+        categoria = results['items'][0]['snippet']['categoryId']
+        print(categoria)
+        results = conn.videoCategories().list(part = 'snippet', id = categoria).execute()
+        print(results['items'])
+    return 
+"""
 
 #Función que escribe el la lista de tripletas (titulo, id video, comentarios) en un fichero csv.
 def write_to_csv(final):
     with io.open('comentarios.csv', "w", encoding="utf-8", newline="") as comments_file:
         comments_writer = csv.writer(comments_file)
-        comments_writer.writerow(['Titulo', 'Video ID', 'Comentarios'])
+        comments_writer.writerow(['Categorias','Titulo', 'Video ID', 'Comentarios'])
         comments_writer.writerow(final)
 
 def main():
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     youtube = get_authenticated_service()
-    num_videos = 5
+    num_videos = 1
     tipo = input('¿Introduce usuario o id?[U/I]: ')
     tipo = tipo.lower()
     #Cogemos el id de las subidas del canal.
-    id_uploads = coger_id_upload(youtube,tipo)
+    id_canal,id_uploads = coger_id_upload(youtube,tipo)
+    categorias = categoria_canal(youtube,id_canal)
+    #categorias = categorias[0] + " "+ categorias[1]
+    print(categorias)
     #Cogemos los títulos de los num_videos últimos y los ids de los num_videos últimos.
     titulos_idVideos = coger_videos(youtube,id_uploads, num_videos)
     titulos_videos = titulos_idVideos.keys()
     id_videos = list(titulos_idVideos.values())
     #Cogemos los comentarios de los vídeos.
     comentarios = coger_comentarios(youtube,id_videos)
-    final = list(zip(titulos_videos,id_videos,comentarios.values()))
+    #TODO Solo coge la primera categoria de la lista.
+    final = list(zip(categorias,titulos_videos,id_videos,comentarios.values()))
     write_to_csv(final)
 
 if __name__ == '__main__':
