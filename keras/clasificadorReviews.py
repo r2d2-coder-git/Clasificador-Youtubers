@@ -54,9 +54,9 @@ def create_embedding_matrix(filepath, word_index, embedding_dim):
 
     return embedding_matrix
 
-filepath_dict = {'yelp':   'data/yelp_labelled.txt',
-                 'amazon': 'data/amazon_cells_labelled.txt',
-                 'imdb':   'data/imdb_labelled.txt'}
+filepath_dict = {'yelp':   'keras/data/yelp_labelled.txt',
+                 'amazon': 'keras/data/amazon_cells_labelled.txt',
+                 'imdb':   'keras/data/imdb_labelled.txt'}
 
 df_list = []
 #Para cada fichero de opiniones se va creando un dataframe que se añade a una lista de dataframes que después se une con el concat en un sólo dataframe.
@@ -185,7 +185,7 @@ model = Sequential()
 # por frase.
 #Creamos la matriz de words embedding preentrenadas. Que incluye nuestro vocabulario acompañado de los vectores.
 embedding_matrix = create_embedding_matrix(
-    'data/glove.6B.50d.txt',
+    'keras/data/glove.6B.50d.txt',
     tokenizer.word_index, embedding_dim)
 
 model.add(layers.Embedding(vocab_size, embedding_dim, 
