@@ -24,12 +24,12 @@ from google.auth.transport.requests import Request
 #Crear Servicio de conexión a la API de youtube con credenciales en caché (con un archivo token.pickle)
 def get_authenticated_service():
     credentials = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists('comentariosAPI/token.pickle'):
+        with open('comentariosAPI/token.pickle', 'rb') as token:
             credentials = pickle.load(token)
-    #  Check if the credentials are invalid or do not exist
+    #  Comprobar si las credenciales son válidas
     if not credentials or not credentials.valid:
-        # Check if the credentials have expired
+        # Comprueba si han caducado las credenciales
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
@@ -37,38 +37,15 @@ def get_authenticated_service():
                 CLIENT_SECRETS_FILE, SCOPES)
             credentials = flow.run_console()
  
-        # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
+        # Guarda en un fichero pickle las credenciales para la siguiente ejecución.
+        with open('comentariosAPI/token.pickle', 'wb') as token:
             pickle.dump(credentials, token)
  
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
 ##Coger información del canal con el parámetro contentDetails en función de si el identificador es idChannel o el nombre de usuario del canal de youtube.
 ## Devuelve el id de las subidas de vídeo.
-def coger_id_upload(conn,tipo_id):
-    search_channel_name = ""
-    channels_response=""
-    id_user =""
-    if tipo_id == 'u':
-        search_channel_name = input('Introduce el usuario: ')
-        channels_response = conn.channels().list(
-        forUsername=search_channel_name,
-        part="contentDetails"
-        ).execute()
-        search_channel_name = channels_response['items'][0]['id']
-    elif tipo_id == 'i':
-        search_channel_name = input('Introduce el id del canal: ')
-        channels_response = conn.channels().list(
-        id=search_channel_name,
-        part="contentDetails"
-        ).execute()
-    else: 
-        print('Tipo de identificador no soportado.')
-        return None
-    ##Cogemos todas las playlist del canal y cogemos aquella que incluye todas las subidas del usuario.
-    return search_channel_name,channels_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-
-def coger_id_upload_mejor(conn,id):
+def coger_id_upload(conn,id):
     #Probamos buscando con un petición por nombre de usuario.
     respuesta = conn.channels().list(
     forUsername=id,
@@ -113,7 +90,7 @@ def coger_videos(conn, playlist_id, num_videos):
             break
     return titulos_videos, id_videos
 
-#Función para coger los comentarios de los videos asociados a id_videos.
+#Función para coger los comentarios de los videos asociados a id_videos y devolver cada comentario con la categoria del canal.
 def coger_comentarios(conn,id_videos,categoria):
     comentarios = []
     next_page_token = None
@@ -123,7 +100,7 @@ def coger_comentarios(conn,id_videos,categoria):
         while results:
             for item in results['items']:
                 #Poner límite de comentarios por canal
-                if (len(comentarios) == 50):
+                if (len(comentarios) == 250):
                     return comentarios
                 comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
                 comentarios.append([comment,categoria])
@@ -157,14 +134,6 @@ def concatenar_categorias(list):
         result += str(element)+" "
     return result
 
-#Duplicar las categorías para poder hacer el zip con todos los vídeos.
-"""
-def crear_lista_cat(num_videos, categorias):
-    lista_cat = [categorias]
-    for i in range(num_videos-1):
-        lista_cat.append(lista_cat[0])
-    return lista_cat
-"""
 #Coger urls de los ficheros
 def leer_urls(fich_canales):
     f = open(fich_canales, "r")
@@ -184,18 +153,17 @@ def main():
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     youtube = get_authenticated_service()
     num_videos = 5
-    #url = input('Introduce la url del canal: ')
     for url in urls:
         id = ultima_palabra_url(url)
         #Cogemos el id de las subidas del canal.
-        id_canal, id_uploads = coger_id_upload_mejor(youtube, id)
+        id_canal, id_uploads = coger_id_upload(youtube, id)
         #Cogemos la categoria del canal.
-        categorias = categoria_canal(youtube,id_canal)
-        categorias = concatenar_categorias(set(map(ultima_palabra_url,categorias)))
+        categorias = list(set(map(ultima_palabra_url,categoria_canal(youtube,id_canal))))
+        #categorias = concatenar_categorias(set(map(ultima_palabra_url,categorias)))
         #Cogemos los títulos de los num_videos últimos y los ids de los num_videos últimos.
         titulos_videos, id_videos = coger_videos(youtube,id_uploads, num_videos)
         #Cogemos los comentarios de los vídeos junto con la categoria del canal.
-        comentarios = coger_comentarios(youtube,id_videos, categorias)
+        comentarios = coger_comentarios(youtube,id_videos, categorias[0])
         comentarios_total.append(comentarios)
     #Escribimos los comentarios junto con la categoria del canal en un csv.
     write_to_csv(aplanar_lista(comentarios_total))
