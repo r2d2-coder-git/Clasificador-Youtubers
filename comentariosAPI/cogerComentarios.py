@@ -14,6 +14,8 @@ import os
 import pickle
 import csv
 import io
+import re
+import emoji
 import google.oauth2.credentials
  
 from googleapiclient.discovery import build
@@ -103,7 +105,9 @@ def coger_comentarios(conn,id_videos,categoria):
                 if (len(comentarios) == 250):
                     return comentarios
                 comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
-                comentarios.append([comment,categoria])
+                comentario_limpio = deEmojify(comment)
+                if comentario_limpio != "":
+                    comentarios.append([comentario_limpio,categoria])
 
             #Comprobar si hay más páginas de comentarios
             if 'nextPageToken' in results:
@@ -116,7 +120,7 @@ def coger_comentarios(conn,id_videos,categoria):
 
 #Función que escribe el la lista de tripletas (titulo, id video, comentarios) en un fichero csv.
 def write_to_csv(final):
-    with io.open('comentarios.csv', "w", encoding="utf-8", newline="") as comments_file:
+    with io.open('./redNeuronal/data/comentarios.csv', "w", encoding="utf-8", newline="") as comments_file:
         comments_writer = csv.writer(comments_file)
         comments_writer.writerow(['Comentarios', 'Categoria'])
         for row in final:
@@ -135,35 +139,46 @@ def concatenar_categorias(list):
     return result
 
 #Coger urls de los ficheros
-def leer_urls(fich_canales):
+def leer_canales(fich_canales):
     f = open(fich_canales, "r")
     lineas = f.readlines()
     print (lineas)
     f.close()
     return lineas
-
 #Aplanar listas de un solo nivel y listas de listas
 def aplanar_lista(lst):
     return sum(lst, [])
+#Separar url y categoria 
+def separar_info_canal(info):
+    if(info[-1] == '\n'):
+        url_categoria = info[:-1].split(sep=',')
+    else:
+        url_categoria = info.split(sep=',')
+    url = url_categoria[0]
+    categoria = url_categoria[1]
+    return url,categoria
+#Limpiar comentarios de emojis y otros simbolos
+def deEmojify(text):
+    return emoji.get_emoji_regexp().sub(u'', text)
+
 
 def main():
     comentarios_total = []
     fichero_canales ='comentariosAPI/canales.txt'
-    urls = leer_urls(fichero_canales)
+    info_canal = leer_canales(fichero_canales)
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     youtube = get_authenticated_service()
     num_videos = 5
-    for url in urls:
+    for info in info_canal:
+        #Cogemos la url y la categoria del canal
+        url, categoria = separar_info_canal(info)
         id = ultima_palabra_url(url)
         #Cogemos el id de las subidas del canal.
         id_canal, id_uploads = coger_id_upload(youtube, id)
-        #Cogemos la categoria del canal.
-        categorias = list(set(map(ultima_palabra_url,categoria_canal(youtube,id_canal))))
-        #categorias = concatenar_categorias(set(map(ultima_palabra_url,categorias)))
         #Cogemos los títulos de los num_videos últimos y los ids de los num_videos últimos.
         titulos_videos, id_videos = coger_videos(youtube,id_uploads, num_videos)
         #Cogemos los comentarios de los vídeos junto con la categoria del canal.
-        comentarios = coger_comentarios(youtube,id_videos, categorias[0])
+        comentarios = coger_comentarios(youtube,id_videos, categoria)
         comentarios_total.append(comentarios)
     #Escribimos los comentarios junto con la categoria del canal en un csv.
     write_to_csv(aplanar_lista(comentarios_total))
