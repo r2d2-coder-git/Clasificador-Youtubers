@@ -68,7 +68,9 @@ def baseline_model(optimizer='adam', loss='categorical_crossentropy'):
                            input_length=maxlen, 
                            trainable=True))
     model.add(layers.GlobalMaxPool1D())
-    model.add(layers.Dense(10, activation='relu'))
+    model.add(layers.Dense(2048, activation='relu'))
+    model.add(layers.Dense(2048, activation='relu'))
+    model.add(layers.Dense(2048, activation='relu'))
     model.add(layers.Dense(4, activation='softmax'))
     model.compile(optimizer='adam',
               loss='categorical_crossentropy',
@@ -92,7 +94,9 @@ def main():
     plt.pie(values, autopct='%1.1f%%', labels=categorias)
     plt.title("Distribución de clases")
     plt.axis('equal')
-    #plt.show()
+    plt.show()
+    #Distribución
+    print(df['categoria'].value_counts())
 
     # Codficar las variables de salida como enteros.
     encoder = LabelEncoder()
@@ -100,10 +104,11 @@ def main():
     encoded_Y = encoder.transform(Y)
     # Convertir los enteros a variables dummy (one hot encoding)
     dummy_y = np_utils.to_categorical(encoded_Y)
-    dummy_y = np.argmax(dummy_y, axis=-1)
+    dummy_y = np.argmax(dummy_y, axis=-1) #Para que no esté en one hot encoding y ver métricas
 
     print (dummy_y)
     #Dividir el dataset en conjunto de training y test
+    #TO-DO PARÁMETRO STRATIFY MIRAR PARA DISTRIBUCION DE TEST Y TRAIN.
     sentences_train, sentences_test, y_train, y_test = train_test_split(
     comentarios, dummy_y, test_size=0.25, random_state=1000)
     print(y_train)
@@ -123,7 +128,8 @@ def main():
     #Se añade un padding para que todas las frases se vean representadas por vectores del mismo tamaño.
     X_train = pad_sequences(X_train, padding='post', maxlen=maxlen)
     X_test = pad_sequences(X_test, padding='post', maxlen=maxlen)
-    #Creamos la matriz con los vectores preentrenados de palabras
+    #Creamos la matriz con los vectores preentrenados de palabras 
+    # TO-DO (mirar preprocesado que coincida con las palabras de los embedding preentrenados)
     global embedding_matrix
     embedding_matrix = create_embedding_matrix(
     'redNeuronal/data/embeddings-m-model.vec',
@@ -132,7 +138,7 @@ def main():
     print("Tamaño del vocabulario cubierto por nuestros vectores preentrenados " ,nonzero_elements / vocab_size)
     #Entrenamiento
     estimator = KerasClassifier(build_fn=baseline_model, verbose=0)
-    kfold = KFold(n_splits=10, shuffle=True)
+    kfold = KFold(n_splits=10,random_state=1000) #TO-DO mirar parámetro shuffle y generador de random-state aleatorio.
     #Hiperparámetros
     optimizers = ['adam',"rmsprop"] #rmsprop  
     epochs = [30,50,100]
@@ -151,11 +157,10 @@ def main():
     np.save("ytest.npy", y_test)
     
     #PROYECTOR DE EMBEDDINGS
-    # Set up a logs directory, so Tensorboard knows where to look for files
     #Cogemos las palabras en el tokenizer
     string_json = tokenizer.get_config()['word_docs']
     palabras = json.loads(string_json).keys()
-
+    #Directorio donde se ponen los ficheros para configurar el modelo de visión de las palabras.
     log_dir='./redNeuronal/proyector_emb/'
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)

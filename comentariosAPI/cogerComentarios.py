@@ -105,6 +105,7 @@ def coger_comentarios(conn,id_videos,categoria):
                 if (len(comentarios) == 250):
                     return comentarios
                 comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
+                #Quitamos los emojis de los comentarios y eliminamos solo los comentarios con emojis
                 comentario_limpio = deEmojify(comment)
                 if comentario_limpio != "":
                     comentarios.append([comentario_limpio,categoria])
@@ -157,6 +158,7 @@ def separar_info_canal(info):
     url = url_categoria[0]
     categoria = url_categoria[1]
     return url,categoria
+    
 #Limpiar comentarios de emojis y otros simbolos
 def deEmojify(text):
     return emoji.get_emoji_regexp().sub(u'', text)
@@ -177,7 +179,7 @@ def main():
         id_canal, id_uploads = coger_id_upload(youtube, id)
         #Cogemos los títulos de los num_videos últimos y los ids de los num_videos últimos.
         titulos_videos, id_videos = coger_videos(youtube,id_uploads, num_videos)
-        #Cogemos los comentarios de los vídeos junto con la categoria del canal.
+        #Cogemos los comentarios de los vídeos junto con la categoria del canal (máximo 250 por canal).
         comentarios = coger_comentarios(youtube,id_videos, categoria)
         comentarios_total.append(comentarios)
     #Escribimos los comentarios junto con la categoria del canal en un csv.
