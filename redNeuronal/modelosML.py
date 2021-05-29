@@ -1,8 +1,12 @@
 
 #Sistema operativo
+from operator import index
 import os as os
+from pandas.core.frame import DataFrame
 #Tensorflow 
 import tensorflow as tf
+from tensorflow._api.v2 import train
+from tensorflow.python.keras.backend import print_tensor
 import tensorflow_datasets as tfds
 from tensorboard.plugins import projector
 #Pandas library is good for analyzing tabular data. You can use it for exploratory data analysis, statistics, visualization.
@@ -11,6 +15,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import PredefinedSplit
 
 #KERAS es una API escrita en python que permite acceder a otros frameworks que desarrollan redes neuronales como TensorFlow.
 from keras.models import Sequential
@@ -36,8 +41,10 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
 #json
 import json
+#random
+import random
 #VARIABLES GLOBALES DEL MODELO
-fichero_com = 'redNeuronal/data/comentarios.csv'
+fichero_com = 'redNeuronal/data/comentarios_sin_duplicados.csv'
 maxlen = 200
 embedding_dim = 100
 vocab_size = 0
@@ -59,7 +66,7 @@ def create_embedding_matrix(filepath, word_index, embedding_dim):
     return embedding_matrix
 
 # define baseline model
-def baseline_model(optimizer='adam', loss='categorical_crossentropy'):
+def baseline_model(tipo,optimizer='adam', loss='categorical_crossentropy'):
 	# Se crea el modelo con 4 capas, una embedding, una piscina para reducir las carecterísticas, y 2 densas.
     model = Sequential()
     model.add(layers.Embedding(input_dim=vocab_size, 
@@ -67,29 +74,69 @@ def baseline_model(optimizer='adam', loss='categorical_crossentropy'):
                            weights=[embedding_matrix], 
                            input_length=maxlen, 
                            trainable=True))
+    #Red convolucional
+    if (tipo == 1):
+        model.add(layers.Conv1D(128, 5, activation='relu'))
     model.add(layers.GlobalMaxPool1D())
-    model.add(layers.Dense(2048, activation='relu'))
-    model.add(layers.Dense(2048, activation='relu'))
-    model.add(layers.Dense(2048, activation='relu'))
+    model.add(layers.Dense(10, activation='relu'))
     model.add(layers.Dense(4, activation='softmax'))
     model.compile(optimizer='adam',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
-    #model.summary()
+    model.summary()
     return model
+        
+def array_to_dataframe(x_test):
+    x_test_df = pd.DataFrame({"X_test":[x_test[0]]})
+    for i in range(len(x_test)-1):
+        x_test_df = x_test_df.append({'X_test':x_test[i+1]}, ignore_index=True)
+    return x_test_df
+
+def train_test_validation_split(df, categorias):
+    column_names = df.columns
+    df_train = pd.DataFrame(columns=column_names)
+    df_validation = pd.DataFrame(columns=column_names)
+    df_test = pd.DataFrame(columns=column_names)
+    #Recorremos las categorías para separar los nombres de las canales en proporción.
+    for categoria in categorias:
+
+        category_rows = df.loc[df['categoria']== categoria]
+        names_channels = list(category_rows['nombre_canal'].unique())
+        num_channels = len(names_channels)
+        #Separamos los nombres de los canales segun el porcentaje de train, validation y test
+        names_train = random.sample(names_channels,round(num_channels*0.6))
+        remaining_channels = list(set(names_channels)-set(names_train))
+        names_validation = random.sample(remaining_channels, round(num_channels*0.2))
+        names_test = list(set(remaining_channels)- set(names_validation))
+        #Asignamos las filas correspondientes a cada conjunto
+        for name_train in names_train:
+            rows_train = df.loc[df['nombre_canal'] == name_train]
+            df_train = df_train.append(rows_train, ignore_index= False)
+
+        for name_validation in names_validation:
+            rows_validation = df.loc[df['nombre_canal'] == name_validation]
+            df_validation = df_validation.append(rows_validation, ignore_index= False)
+
+        for name_test in names_test:
+            rows_test = df.loc[df['nombre_canal'] == name_test]
+            df_test = df_test.append(rows_test, ignore_index= False)
+    return df_train,df_validation,df_test
 
 def main():
     #Se lee el fichero csv de comentarios
-    df = pd.read_csv(fichero_com, names=['comentarios', 'categoria'], sep=',')
-    #El primer valor es el nombre de la columna
-    comentarios = df['comentarios'].values[1:]
-    Y = df['categoria'].values[1:]
+    df = pd.read_csv(fichero_com, names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria'], sep=',')
+    #La primera fila son los nombres de las columnas
+    df = df.drop(0, axis=0)
+    df.reset_index(drop=True, inplace=True)
+    comentarios = df['comentarios'].values[:]
+    canales = df['nombre_canal'].values[:]
+    Y = df['categoria'].values[:]
     #Mostrar distribución de datos.
     serie = pd.Series(df['categoria'].values[1:])
     distribucion_clases = serie.value_counts()
-
     categorias = list(distribucion_clases.keys())
-    print(categorias)
+
+    """
     values = distribucion_clases.values
     plt.pie(values, autopct='%1.1f%%', labels=categorias)
     plt.title("Distribución de clases")
@@ -97,6 +144,7 @@ def main():
     plt.show()
     #Distribución
     print(df['categoria'].value_counts())
+    """
 
     # Codficar las variables de salida como enteros.
     encoder = LabelEncoder()
@@ -105,15 +153,35 @@ def main():
     # Convertir los enteros a variables dummy (one hot encoding)
     dummy_y = np_utils.to_categorical(encoded_Y)
     dummy_y = np.argmax(dummy_y, axis=-1) #Para que no esté en one hot encoding y ver métricas
+    #Guardar un diccionario con las variables en string asociadas con el encoding correspondiente.
+    topicos_encoded = dict(zip(dummy_y,Y))
+    np.save("topicos_encoded.npy",topicos_encoded)
+    
+    #Añadimos la columna dummy_y al dataFrame.
+    df = df.assign(dummy_y = dummy_y)
+    #Dividir el dataset en conjunto de training test y validacion
+    train_df, validation_df, test_df = train_test_validation_split(df, categorias)
 
-    print (dummy_y)
-    #Dividir el dataset en conjunto de training y test
-    #TO-DO PARÁMETRO STRATIFY MIRAR PARA DISTRIBUCION DE TEST Y TRAIN.
-    sentences_train, sentences_test, y_train, y_test = train_test_split(
-    comentarios, dummy_y, test_size=0.25, random_state=1000)
-    print(y_train)
+    train_df = train_df.astype({"dummy_y": np.int64})
+    validation_df = validation_df.astype({"dummy_y": np.int64})
+    test_df = test_df.astype({"dummy_y": np.int64})
+
+    #train_df, test_df = train_test_split(df, test_size = 0.25, random_state=1000 )
+    #train_df.to_csv('trainsplit_df.csv', index=True,encoding='utf-8', sep= ',')
+    #train_df = df
+
+    train_val_df = pd.concat([train_df,validation_df],ignore_index = True)
+    lenTrain = len(train_df.index)
+    lenValidation = len(validation_df.index)
+    splitCV = [0] * lenTrain + [-1] * lenValidation
+    
+    sentences_train = train_val_df['comentarios']
+    y_train = train_val_df['dummy_y']
+    print(list(set(y_train)))
+    sentences_test = test_df['comentarios']
+    y_test = test_df['dummy_y']
     #Embedding words
-    tokenizer = Tokenizer(num_words=10000)
+    tokenizer = Tokenizer(num_words=60000)
     tokenizer.fit_on_texts(sentences_train)
     X_train = tokenizer.texts_to_sequences(sentences_train)
     X_test = tokenizer.texts_to_sequences(sentences_test)
@@ -128,8 +196,12 @@ def main():
     #Se añade un padding para que todas las frases se vean representadas por vectores del mismo tamaño.
     X_train = pad_sequences(X_train, padding='post', maxlen=maxlen)
     X_test = pad_sequences(X_test, padding='post', maxlen=maxlen)
+    x_test_df = array_to_dataframe(X_test)
+    #Añadimos los vectores de 200 posiciones a cada comentario de test para predecir en predecirModelo.py.
+    test_df.reset_index(drop=True, inplace=True)
+    test_df = pd.concat([test_df,x_test_df], axis=1)
+
     #Creamos la matriz con los vectores preentrenados de palabras 
-    # TO-DO (mirar preprocesado que coincida con las palabras de los embedding preentrenados)
     global embedding_matrix
     embedding_matrix = create_embedding_matrix(
     'redNeuronal/data/embeddings-m-model.vec',
@@ -137,25 +209,30 @@ def main():
     nonzero_elements = np.count_nonzero(np.count_nonzero(embedding_matrix, axis=1))
     print("Tamaño del vocabulario cubierto por nuestros vectores preentrenados " ,nonzero_elements / vocab_size)
     #Entrenamiento
-    estimator = KerasClassifier(build_fn=baseline_model, verbose=0)
-    kfold = KFold(n_splits=10,random_state=1000) #TO-DO mirar parámetro shuffle y generador de random-state aleatorio.
+    estimator = KerasClassifier(build_fn=baseline_model, tipo=1, verbose=0)
+    ps = PredefinedSplit(test_fold = splitCV)
+    kfold = ps
     #Hiperparámetros
-    optimizers = ['adam',"rmsprop"] #rmsprop  
-    epochs = [30,50,100]
-    batches = [10,20,30]
+    optimizers = ['rmsprop','adam'] #rmsprop  
+    epochs = [1] #30,50,100
+    batches = [5] #10,20,30
     #Entrenamiento parrilla de hiperparámetros
     param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches)
-    grid = GridSearchCV(estimator=estimator, param_grid=param_grid, scoring='accuracy', cv=kfold, verbose =0, n_jobs=3) #Uso de todas las CPUs menos 2
-    grid_result = grid.fit(X_train, y_train)
+    grid = GridSearchCV(estimator=estimator, param_grid=param_grid, scoring='accuracy', cv=kfold, verbose =0, n_jobs=3, error_score = "raise") #Uso de todas las CPUs menos 2
+    grid.fit(X_train, y_train)
     #Modelo
     estimator = grid.best_estimator_
     print(grid.best_params_)
     print(grid.best_score_)
-    #Predicciones de los ejemplos de test
-    estimator.model.save('path_to_my_model.h5')
-    np.save("xtest.npy", X_test)
-    np.save("ytest.npy", y_test)
-    
+    #Guardamos el modelo y guardamos el dataframe de test
+    estimator.model.save('model.h5')
+    test_df.to_csv('test_df.csv', index=False,encoding='utf-8', sep= ',')
+    train_df.to_csv('train_df.csv', index=False,encoding='utf-8', sep= ',')
+    validation_df.to_csv('validation_df.csv', index=False,encoding='utf-8', sep= ',')
+
+
+
+
     #PROYECTOR DE EMBEDDINGS
     #Cogemos las palabras en el tokenizer
     string_json = tokenizer.get_config()['word_docs']

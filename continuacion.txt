@@ -1,0 +1,9 @@
+Probar diferentes redes.
+
+DISTINTAS ARQUITECTURAS
+-Redes normales.
+-Redes profundas.
+-Redes convolucionales.
+-Redes recurrentes
+-Dropout mirar parámetro.
+AMPLIAR CARACTERISTICAS.
