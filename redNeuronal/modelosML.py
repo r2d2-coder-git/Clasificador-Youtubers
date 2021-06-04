@@ -43,6 +43,10 @@ from sklearn.model_selection import GridSearchCV
 import json
 #random
 import random
+import io
+#Guardar hiperparámetros
+from keras.callbacks import CSVLogger
+
 #VARIABLES GLOBALES DEL MODELO
 fichero_com = 'redNeuronal/data/comentarios_sin_duplicados.csv'
 maxlen = 200
@@ -77,8 +81,13 @@ def baseline_model(tipo,optimizer='adam', loss='categorical_crossentropy'):
     #Red convolucional
     if (tipo == 1):
         model.add(layers.Conv1D(128, 5, activation='relu'))
+    #Red recurrente
+    elif (tipo == 2):
+        model.add(layers.LSTM(units = 100, return_sequences=True, recurrent_dropout=0.2))
+        model.add(layers.LSTM(units = 100, return_sequences=True))
     model.add(layers.GlobalMaxPool1D())
     model.add(layers.Dense(10, activation='relu'))
+    model.add(layers.Dropout(0.2))
     model.add(layers.Dense(4, activation='softmax'))
     model.compile(optimizer='adam',
               loss='categorical_crossentropy',
@@ -123,13 +132,13 @@ def train_test_validation_split(df, categorias):
     return df_train,df_validation,df_test
 
 def main():
+
     #Se lee el fichero csv de comentarios
     df = pd.read_csv(fichero_com, names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria'], sep=',')
     #La primera fila son los nombres de las columnas
+    print(df)
     df = df.drop(0, axis=0)
     df.reset_index(drop=True, inplace=True)
-    comentarios = df['comentarios'].values[:]
-    canales = df['nombre_canal'].values[:]
     Y = df['categoria'].values[:]
     #Mostrar distribución de datos.
     serie = pd.Series(df['categoria'].values[1:])
@@ -159,17 +168,31 @@ def main():
     
     #Añadimos la columna dummy_y al dataFrame.
     df = df.assign(dummy_y = dummy_y)
-    #Dividir el dataset en conjunto de training test y validacion
-    train_df, validation_df, test_df = train_test_validation_split(df, categorias)
+    
+    if not os.path.isfile('resultados_modelos/data/train_df.csv'):
+        #Dividir el dataset en conjunto de training test y validacion
+        train_df, validation_df, test_df = train_test_validation_split(df, categorias)
+    else:
+        print("Cargando conjuntos de datos...")
+        train_df = pd.read_csv('resultados_modelos/data/train_df.csv', names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
+        index_names = train_df[train_df['dummy_y'] == 'dummy_y'].index
+        train_df.drop(index_names, inplace=True)
 
+        validation_df = pd.read_csv('resultados_modelos/data/validation_df.csv', names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
+        index_names = validation_df[validation_df['dummy_y'] == 'dummy_y'].index
+        validation_df.drop(index_names, inplace=True)
+
+        test_df = pd.read_csv('resultados_modelos/data/test_df.csv', names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
+        index_names = test_df[test_df['dummy_y'] == 'X_test'].index
+        test_df.drop(index_names, inplace=True)
+
+    #Cambiamos el tipo de datos a np.int64
     train_df = train_df.astype({"dummy_y": np.int64})
     validation_df = validation_df.astype({"dummy_y": np.int64})
-    test_df = test_df.astype({"dummy_y": np.int64})
+    if not os.path.isfile('resultados_modelos/data/test_df.csv'):
+        test_df = test_df.astype({"dummy_y": np.int64})
 
-    #train_df, test_df = train_test_split(df, test_size = 0.25, random_state=1000 )
-    #train_df.to_csv('trainsplit_df.csv', index=True,encoding='utf-8', sep= ',')
-    #train_df = df
-
+    #Juntamos el training y la validacion y preparamos el cross validation
     train_val_df = pd.concat([train_df,validation_df],ignore_index = True)
     lenTrain = len(train_df.index)
     lenValidation = len(validation_df.index)
@@ -209,29 +232,29 @@ def main():
     nonzero_elements = np.count_nonzero(np.count_nonzero(embedding_matrix, axis=1))
     print("Tamaño del vocabulario cubierto por nuestros vectores preentrenados " ,nonzero_elements / vocab_size)
     #Entrenamiento
-    estimator = KerasClassifier(build_fn=baseline_model, tipo=1, verbose=0)
+    estimator = KerasClassifier(build_fn=baseline_model, tipo=2, verbose=0)
     ps = PredefinedSplit(test_fold = splitCV)
     kfold = ps
     #Hiperparámetros
-    optimizers = ['rmsprop','adam'] #rmsprop  
-    epochs = [1] #30,50,100
-    batches = [5] #10,20,30
+    optimizers = ['rmsprop' ,'adam'] #rmsprop  
+    epochs = [30,50,75] #30,50,75
+    batches = [256,512,1024] #256,512,1024
     #Entrenamiento parrilla de hiperparámetros
     param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches)
     grid = GridSearchCV(estimator=estimator, param_grid=param_grid, scoring='accuracy', cv=kfold, verbose =0, n_jobs=3, error_score = "raise") #Uso de todas las CPUs menos 2
-    grid.fit(X_train, y_train)
+    #Logger para guardar hiperparámetros
+    csv_logger = CSVLogger('training.log', separator=',', append=False)
+    grid.fit(X_train, y_train,callbacks=[csv_logger])
     #Modelo
     estimator = grid.best_estimator_
     print(grid.best_params_)
     print(grid.best_score_)
     #Guardamos el modelo y guardamos el dataframe de test
     estimator.model.save('model.h5')
-    test_df.to_csv('test_df.csv', index=False,encoding='utf-8', sep= ',')
-    train_df.to_csv('train_df.csv', index=False,encoding='utf-8', sep= ',')
-    validation_df.to_csv('validation_df.csv', index=False,encoding='utf-8', sep= ',')
-
-
-
+    if not os.path.isfile('resultados_modelos/data/train_df.csv'):
+        test_df.to_csv('test_df.csv', index=False,encoding='utf-8', sep= ',')
+        train_df.to_csv('train_df.csv', index=False,encoding='utf-8', sep= ',')
+        validation_df.to_csv('validation_df.csv', index=False,encoding='utf-8', sep= ',')
 
     #PROYECTOR DE EMBEDDINGS
     #Cogemos las palabras en el tokenizer

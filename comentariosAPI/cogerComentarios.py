@@ -24,15 +24,13 @@ SCOPES = ["https://www.googleapis.com/auth/youtube",
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-# Diccionario para buscar los caanales de youtube por keywords.
+# Diccionario para buscar los canales de youtube por keywords.
 diccionario_topicos = {
     #'informatica': ['informatica', 'programacion', 'codigo', 'web']#,
     #'cocina': ['cocina', 'comida', 'cocinar', 'plato de comida']#,
-    #'politica': ['politica', 'economia', 'politico', 'politicos', 'gobierno']#,
-    'dibujo': ['dibujo', 'dibujar', 'pintura', 'artista']
+    'politica': ['politica', 'economia', 'politico', 'politicos', 'gobierno']#,
+    #'dibujo': ['dibujo', 'dibujar', 'pintura', 'artista']
 }
-
-# Crear un servicio que contacte con la API de Youtube.
 
 
 # Crear Servicio de conexión a la API de youtube con credenciales en caché (con un archivo token.pickle)
@@ -314,15 +312,17 @@ def main():
     # BUSCAMOS TODOS LOS CANALES POSIBLES CON EL DICCIONARIO QUE TENEMOS.
     #canales = buscar_canales(youtube, palabras_topicos, num_busqueda,topicos )
     #Creamos el fichero donde se guardan los comentarios sino existe
-    if not os.path.isfile('./redNeuronal/data/comentarios.csv'):
-        with io.open('./redNeuronal/data/comentarios.csv', "w", encoding="utf-8", newline="") as comments_file:
+    if not os.path.isfile('./redNeuronal/data/comentarios_aux.csv'):
+        with io.open('./redNeuronal/data/comentarios_aux.csv', "w", encoding="utf-8", newline="") as comments_file:
             comments_writer = csv.writer(comments_file)
             comments_writer.writerow(['Comentarios', 'Id_comentario', 'Nombre_canal', 'Categoria'])
-    f = open("canales_sin_leer-dibujo.txt", "r")
-    canales = {'dibujo':crearLista(f.readline())}
-    lista_id_canales = canales.get("dibujo")
+    f = open("./comentariosPorLeer/canales_sin_leer-cocina.txt", "r")
+    canales = {'politica':crearLista(f.readline())}
+    print("Canales restantes: " , len(canales))
+    lista_id_canales = canales.get("politica")
+    print("Canales restantes: " , len(lista_id_canales))
     canales_validos = 0
-    # Empezar bucles de parrillas TODO
+    # Empezar bucles de parrillas 
     for canales_objetivo in num_canales:
         for num_comentarios in comentarios_canal:
             # Miramos en la lista de canales por tópico cada lista de canales.
