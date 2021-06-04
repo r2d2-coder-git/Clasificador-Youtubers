@@ -14,7 +14,7 @@ import io
 from tensorflow.keras.preprocessing import text
 
 fichero_test = "resultados_modelos/data/test_df.csv"
-modelo_actual = "red_normal"
+modelo_actual = "lstm"
 
 #Convertir los elementos de una lista que son string en vectores con un formato específico.
 def string_to_vector(list_strings):

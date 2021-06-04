@@ -1,950 +1,242 @@
 CANAL DE Ada Lovecode - Didacticode Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 1  9 88  2]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.880     0.936       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.880       100
-   macro avg      0.250     0.220     0.234       100
-weighted avg      1.000     0.880     0.936       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de Ada Lovecode - Didacticode hay un total de 88 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 88 comentarios.
 Accuracy: 0.88
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Alex Kun Anahata Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0]
- [ 7 91  2]
- [ 0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.910     0.953       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.910       100
-   macro avg      0.333     0.303     0.318       100
-weighted avg      1.000     0.910     0.953       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Alex Kun Anahata hay un total de 91 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 91 comentarios.
-Accuracy: 0.91
+En el canal de Alex Kun Anahata hay un total de 88 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 88 comentarios.
+Accuracy: 0.88
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE AprendeIA con Ligdi Gonzalez Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 7 14 74  5]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.740     0.851       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.740       100
-   macro avg      0.250     0.185     0.213       100
-weighted avg      1.000     0.740     0.851       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de AprendeIA con Ligdi Gonzalez hay un total de 74 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 74 comentarios.
-Accuracy: 0.74
+En el canal de AprendeIA con Ligdi Gonzalez hay un total de 60 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 60 comentarios.
+Accuracy: 0.6
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Arte Pro Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 4 67 24  5]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.670     0.802       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.670       100
-   macro avg      0.250     0.168     0.201       100
-weighted avg      1.000     0.670     0.802       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Arte Pro hay un total de 67 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 67 comentarios.
-Accuracy: 0.67
+En el canal de Arte Pro hay un total de 72 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 72 comentarios.
+Accuracy: 0.72
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE COCINA Y ROCK AND ROLL Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[59 15 10 16]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.590     0.742       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.590       100
-   macro avg      0.250     0.147     0.186       100
-weighted avg      1.000     0.590     0.742       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de COCINA Y ROCK AND ROLL hay un total de 59 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 59 comentarios.
-Accuracy: 0.59
+En el canal de COCINA Y ROCK AND ROLL hay un total de 62 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 62 comentarios.
+Accuracy: 0.62
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE COCINANDO CON ANTONIA Lozoya Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[92  3  2  3]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.920     0.958       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.920       100
-   macro avg      0.250     0.230     0.240       100
-weighted avg      1.000     0.920     0.958       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de COCINANDO CON ANTONIA Lozoya hay un total de 92 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 92 comentarios.
-Accuracy: 0.92
+En el canal de COCINANDO CON ANTONIA Lozoya hay un total de 90 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 90 comentarios.
+Accuracy: 0.9
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Cake Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [10 46 29 15]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.460     0.630       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.460       100
-   macro avg      0.250     0.115     0.158       100
-weighted avg      1.000     0.460     0.630       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Cake hay un total de 46 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 46 comentarios.
-Accuracy: 0.46
+En el canal de Cake hay un total de 58 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 58 comentarios.
+Accuracy: 0.58
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Cocina Catracha Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[84  3 11  2]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.840     0.913       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.840       100
-   macro avg      0.250     0.210     0.228       100
-weighted avg      1.000     0.840     0.913       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Cocina Catracha hay un total de 84 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 84 comentarios.
-Accuracy: 0.84
+En el canal de Cocina Catracha hay un total de 85 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 85 comentarios.
+Accuracy: 0.85
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Cocinando el Cambio Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[51 19 22  8]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.510     0.675       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.510       100
-   macro avg      0.250     0.128     0.169       100
-weighted avg      1.000     0.510     0.675       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de Cocinando el Cambio hay un total de 51 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 51 comentarios.
 Accuracy: 0.51
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Cocineros Italianos - Recetas de Cocina Italiana Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[83 10  5  2]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.830     0.907       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.830       100
-   macro avg      0.250     0.207     0.227       100
-weighted avg      1.000     0.830     0.907       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Cocineros Italianos - Recetas de Cocina Italiana hay un total de 83 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 83 comentarios.
-Accuracy: 0.83
+En el canal de Cocineros Italianos - Recetas de Cocina Italiana hay un total de 84 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 84 comentarios.
+Accuracy: 0.84
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Comida de Marruecos con Hakima Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[94  4  1  1]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.940     0.969       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.940       100
-   macro avg      0.250     0.235     0.242       100
-weighted avg      1.000     0.940     0.969       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Comida de Marruecos con Hakima hay un total de 94 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 94 comentarios.
-Accuracy: 0.94
-ACIERTO EN CLASIFICACIÓN DE CANAL!
-
-CANAL DE Creativohn Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0]
- [ 0  0  0]
- [ 1  4 95]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.950     0.974       100
-
-    accuracy                          0.950       100
-   macro avg      0.333     0.317     0.325       100
-weighted avg      1.000     0.950     0.974       100
-
-CLASIFICACIÓN DEL CANAL:
-En el canal de Creativohn hay un total de 95 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 95 comentarios.
+En el canal de Comida de Marruecos con Hakima hay un total de 95 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 95 comentarios.
 Accuracy: 0.95
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
+CANAL DE Creativohn Categoria: informatica
+CLASIFICACIÓN DEL CANAL:
+En el canal de Creativohn hay un total de 94 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 94 comentarios.
+Accuracy: 0.94
+ACIERTO EN CLASIFICACIÓN DE CANAL!
+
 CANAL DE Códigos de Programación Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 2  5 92  1]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.920     0.958       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.920       100
-   macro avg      0.250     0.230     0.240       100
-weighted avg      1.000     0.920     0.958       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de Códigos de Programación hay un total de 92 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 92 comentarios.
 Accuracy: 0.92
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE DEMOS TV Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 9  5 13 73]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.730     0.844       100
-
-    accuracy                          0.730       100
-   macro avg      0.250     0.182     0.211       100
-weighted avg      1.000     0.730     0.844       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de DEMOS TV hay un total de 73 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 73 comentarios.
-Accuracy: 0.73
+En el canal de DEMOS TV hay un total de 69 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 69 comentarios.
+Accuracy: 0.69
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE DISTRITOTV Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 2  2  2 94]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.940     0.969       100
-
-    accuracy                          0.940       100
-   macro avg      0.250     0.235     0.242       100
-weighted avg      1.000     0.940     0.969       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de DISTRITOTV hay un total de 94 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 94 comentarios.
-Accuracy: 0.94
+En el canal de DISTRITOTV hay un total de 93 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 93 comentarios.
+Accuracy: 0.93
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE DecodeCMS Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0]
- [ 0  0  0]
- [ 2 10 88]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.880     0.936       100
-
-    accuracy                          0.880       100
-   macro avg      0.333     0.293     0.312       100
-weighted avg      1.000     0.880     0.936       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de DecodeCMS hay un total de 88 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 88 comentarios.
 Accuracy: 0.88
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Diario Correo Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 6  9  5 80]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.800     0.889       100
-
-    accuracy                          0.800       100
-   macro avg      0.250     0.200     0.222       100
-weighted avg      1.000     0.800     0.889       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Diario Correo hay un total de 80 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 80 comentarios.
-Accuracy: 0.8
+En el canal de Diario Correo hay un total de 78 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 78 comentarios.
+Accuracy: 0.78
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Diario El Comercio Videos Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0]
- [ 0  0  0]
- [ 4  1 95]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.950     0.974       100
-
-    accuracy                          0.950       100
-   macro avg      0.333     0.317     0.325       100
-weighted avg      1.000     0.950     0.974       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Diario El Comercio Videos hay un total de 95 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 95 comentarios.
-Accuracy: 0.95
+En el canal de Diario El Comercio Videos hay un total de 92 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 92 comentarios.
+Accuracy: 0.92
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Dibujando Con Rolando Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 2 90  7  1]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.900     0.947       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.900       100
-   macro avg      0.250     0.225     0.237       100
-weighted avg      1.000     0.900     0.947       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Dibujando Con Rolando hay un total de 90 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 90 comentarios.
-Accuracy: 0.9
+En el canal de Dibujando Con Rolando hay un total de 86 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 86 comentarios.
+Accuracy: 0.86
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Dibujando con Delein Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [14 68 13  5]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.680     0.810       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.680       100
-   macro avg      0.250     0.170     0.202       100
-weighted avg      1.000     0.680     0.810       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Dibujando con Delein hay un total de 68 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 68 comentarios.
-Accuracy: 0.68
+En el canal de Dibujando con Delein hay un total de 75 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 75 comentarios.
+Accuracy: 0.75
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Duilio Palacios Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0]
- [ 2 97  1]
- [ 0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.970     0.985       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.970       100
-   macro avg      0.333     0.323     0.328       100
-weighted avg      1.000     0.970     0.985       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de Duilio Palacios hay un total de 97 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 97 comentarios.
 Accuracy: 0.97
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Explorando teorías Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 2  5  9 84]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.840     0.913       100
-
-    accuracy                          0.840       100
-   macro avg      0.250     0.210     0.228       100
-weighted avg      1.000     0.840     0.913       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Explorando teorías hay un total de 84 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 84 comentarios.
-Accuracy: 0.84
+En el canal de Explorando teorías hay un total de 75 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 75 comentarios.
+Accuracy: 0.75
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Fix Chan Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 5 88  4  3]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.880     0.936       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.880       100
-   macro avg      0.250     0.220     0.234       100
-weighted avg      1.000     0.880     0.936       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Fix Chan hay un total de 88 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 88 comentarios.
-Accuracy: 0.88
+En el canal de Fix Chan hay un total de 93 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 93 comentarios.
+Accuracy: 0.93
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Juan Ramón Rallo Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 3  3 12 82]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.820     0.901       100
-
-    accuracy                          0.820       100
-   macro avg      0.250     0.205     0.225       100
-weighted avg      1.000     0.820     0.901       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Juan Ramón Rallo hay un total de 82 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 82 comentarios.
-Accuracy: 0.82
+En el canal de Juan Ramón Rallo hay un total de 78 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 78 comentarios.
+Accuracy: 0.78
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Julio Astillero Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 3  5  9 83]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.830     0.907       100
-
-    accuracy                          0.830       100
-   macro avg      0.250     0.207     0.227       100
-weighted avg      1.000     0.830     0.907       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Julio Astillero hay un total de 83 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 83 comentarios.
-Accuracy: 0.83
+En el canal de Julio Astillero hay un total de 80 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 80 comentarios.
+Accuracy: 0.8
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Kirael Art Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 5 74 16  5]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.740     0.851       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.740       100
-   macro avg      0.250     0.185     0.213       100
-weighted avg      1.000     0.740     0.851       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Kirael Art hay un total de 74 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 74 comentarios.
-Accuracy: 0.74
+En el canal de Kirael Art hay un total de 73 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 73 comentarios.
+Accuracy: 0.73
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE LATINO TV INTERNACIONAL Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0]
- [ 0  0  0]
- [ 4  1 95]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.950     0.974       100
-
-    accuracy                          0.950       100
-   macro avg      0.333     0.317     0.325       100
-weighted avg      1.000     0.950     0.974       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de LATINO TV INTERNACIONAL hay un total de 95 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 95 comentarios.
-Accuracy: 0.95
+En el canal de LATINO TV INTERNACIONAL hay un total de 90 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 90 comentarios.
+Accuracy: 0.9
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Leonardo Kuffo Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 2  5 89  4]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.890     0.942       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.890       100
-   macro avg      0.250     0.223     0.235       100
-weighted avg      1.000     0.890     0.942       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Leonardo Kuffo hay un total de 89 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 89 comentarios.
-Accuracy: 0.89
+En el canal de Leonardo Kuffo hay un total de 87 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 87 comentarios.
+Accuracy: 0.87
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE LuckStudio - Arte y Diseño Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 6 71 20  3]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.710     0.830       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.710       100
-   macro avg      0.250     0.177     0.208       100
-weighted avg      1.000     0.710     0.830       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de LuckStudio - Arte y Diseño hay un total de 71 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 71 comentarios.
 Accuracy: 0.71
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Malu Mk Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [12 68 18  2]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.680     0.810       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.680       100
-   macro avg      0.250     0.170     0.202       100
-weighted avg      1.000     0.680     0.810       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Malu Mk hay un total de 68 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 68 comentarios.
-Accuracy: 0.68
+En el canal de Malu Mk hay un total de 69 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 69 comentarios.
+Accuracy: 0.69
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Recetas Por Un Tubo Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[90  2  6  2]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.900     0.947       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.900       100
-   macro avg      0.250     0.225     0.237       100
-weighted avg      1.000     0.900     0.947       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Recetas Por Un Tubo hay un total de 90 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 90 comentarios.
-Accuracy: 0.9
+En el canal de Recetas Por Un Tubo hay un total de 91 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 91 comentarios.
+Accuracy: 0.91
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Recetas Topes de Gama Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[81  1 11  7]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.810     0.895       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.810       100
-   macro avg      0.250     0.203     0.224       100
-weighted avg      1.000     0.810     0.895       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Recetas Topes de Gama hay un total de 81 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 81 comentarios.
-Accuracy: 0.81
+En el canal de Recetas Topes de Gama hay un total de 87 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 87 comentarios.
+Accuracy: 0.87
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Ronal Mamani Paredes ARTE MANS Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 4 70 22  4]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.700     0.824       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.700       100
-   macro avg      0.250     0.175     0.206       100
-weighted avg      1.000     0.700     0.824       100
-
 CLASIFICACIÓN DEL CANAL:
 En el canal de Ronal Mamani Paredes ARTE MANS hay un total de 70 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 70 comentarios.
 Accuracy: 0.7
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Samuel Lozano Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 5 13 12 70]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.700     0.824       100
-
-    accuracy                          0.700       100
-   macro avg      0.250     0.175     0.206       100
-weighted avg      1.000     0.700     0.824       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Samuel Lozano hay un total de 70 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 70 comentarios.
-Accuracy: 0.7
+En el canal de Samuel Lozano hay un total de 61 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 61 comentarios.
+Accuracy: 0.61
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Sergio A. Castaño Giraldo Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 3  8 84  5]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.840     0.913       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.840       100
-   macro avg      0.250     0.210     0.228       100
-weighted avg      1.000     0.840     0.913       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Sergio A. Castaño Giraldo hay un total de 84 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 84 comentarios.
-Accuracy: 0.84
+En el canal de Sergio A. Castaño Giraldo hay un total de 78 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 78 comentarios.
+Accuracy: 0.78
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Sisto Pascale Categoria: dibujo
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 9 48 21 22]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      1.000     0.480     0.649       100
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.480       100
-   macro avg      0.250     0.120     0.162       100
-weighted avg      1.000     0.480     0.649       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Sisto Pascale hay un total de 48 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 48 comentarios.
-Accuracy: 0.48
+En el canal de Sisto Pascale hay un total de 57 aciertos de un total de 100 comentarios. Mayor categoría asignada: dibujo con un total de 57 comentarios.
+Accuracy: 0.57
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Tanto Monta En La Cocina Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[93  2  2  3]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.930     0.964       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.930       100
-   macro avg      0.250     0.233     0.241       100
-weighted avg      1.000     0.930     0.964       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Tanto Monta En La Cocina hay un total de 93 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 93 comentarios.
-Accuracy: 0.93
+En el canal de Tanto Monta En La Cocina hay un total de 91 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 91 comentarios.
+Accuracy: 0.91
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE Wilfredo Aleman Categoria: informatica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 1  2 96  1]
- [ 0  0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      1.000     0.960     0.980       100
-    politica      0.000     0.000     0.000         0
-
-    accuracy                          0.960       100
-   macro avg      0.250     0.240     0.245       100
-weighted avg      1.000     0.960     0.980       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de Wilfredo Aleman hay un total de 96 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 96 comentarios.
-Accuracy: 0.96
+En el canal de Wilfredo Aleman hay un total de 93 aciertos de un total de 100 comentarios. Mayor categoría asignada: informatica con un total de 93 comentarios.
+Accuracy: 0.93
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE esRadiovideos Categoria: politica
-MATRIZ DE CONFUSIÓN:
-[[ 0  0  0  0]
- [ 0  0  0  0]
- [ 0  0  0  0]
- [ 8  6  5 81]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      0.000     0.000     0.000         0
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-    politica      1.000     0.810     0.895       100
-
-    accuracy                          0.810       100
-   macro avg      0.250     0.203     0.224       100
-weighted avg      1.000     0.810     0.895       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de esRadiovideos hay un total de 81 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 81 comentarios.
-Accuracy: 0.81
+En el canal de esRadiovideos hay un total de 75 aciertos de un total de 100 comentarios. Mayor categoría asignada: politica con un total de 75 comentarios.
+Accuracy: 0.75
 ACIERTO EN CLASIFICACIÓN DE CANAL!
 
 CANAL DE platosplisplas Categoria: cocina
-MATRIZ DE CONFUSIÓN:
-[[92  5  3]
- [ 0  0  0]
- [ 0  0  0]]
-
-MÉTRICAS:
-              precision    recall  f1-score   support
-
-      cocina      1.000     0.920     0.958       100
-      dibujo      0.000     0.000     0.000         0
- informatica      0.000     0.000     0.000         0
-
-    accuracy                          0.920       100
-   macro avg      0.333     0.307     0.319       100
-weighted avg      1.000     0.920     0.958       100
-
 CLASIFICACIÓN DEL CANAL:
-En el canal de platosplisplas hay un total de 92 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 92 comentarios.
-Accuracy: 0.92
+En el canal de platosplisplas hay un total de 93 aciertos de un total de 100 comentarios. Mayor categoría asignada: cocina con un total de 93 comentarios.
+Accuracy: 0.93
 ACIERTO EN CLASIFICACIÓN DE CANAL!
-
-PORCENTAJE DE ACIERTOS EN CLASIFICACIÓN: 100.0%
 
 MATRIZ DE CONFUSION POR CANALES
 [[10  0  0  0]
@@ -963,18 +255,25 @@ MATRIZ DE CONFUSION POR CANALES
    macro avg      1.000     1.000     1.000        40
 weighted avg      1.000     1.000     1.000        40
 
-MATRIZ DE CONFUSION GLOBAL DE 4000 COMENTARIOS
-[[819  64  73  44]
- [ 71 690 174  65]
- [ 19  66 894  21]
- [ 42  52  69 837]]
+PORCENTAJE DE ACIERTOS EN CLASIFICACIÓN: 100.0%
+
+MATRIZ DE CONFUSIÓN DE TODOS LOS COMENTARIOS DE TEST
+
+[[829  88  56  27]
+ [ 85 724 151  40]
+ [ 27  91 865  17]
+ [ 54  93  62 791]]
+
+MÉTRICAS DE TODOS LOS COMENTARIOS
+
               precision    recall  f1-score   support
 
-      cocina      0.861     0.819     0.840      1000
-      dibujo      0.791     0.690     0.737      1000
- informatica      0.739     0.894     0.809      1000
-    politica      0.866     0.837     0.851      1000
+      cocina      0.833     0.829     0.831      1000
+      dibujo      0.727     0.724     0.725      1000
+ informatica      0.763     0.865     0.811      1000
+    politica      0.904     0.791     0.844      1000
 
-    accuracy                          0.810      4000
-   macro avg      0.814     0.810     0.809      4000
-weighted avg      0.814     0.810     0.809      4000
+    accuracy                          0.802      4000
+   macro avg      0.807     0.802     0.803      4000
+weighted avg      0.807     0.802     0.803      4000
+
