@@ -1,27 +1,15 @@
-
 #Sistema operativo
-from operator import index
 import os as os
-from pandas.core.frame import DataFrame
 #Tensorflow 
 import tensorflow as tf
-from tensorflow._api.v2 import train
-from tensorflow.python.keras.backend import print_tensor
-import tensorflow_datasets as tfds
 from tensorboard.plugins import projector
 #Pandas library is good for analyzing tabular data. You can use it for exploratory data analysis, statistics, visualization.
 import pandas as pd
 #Scikit-learn is a collection of advanced machine-learning algorithms for Python. It also is built upon Numpy and SciPy.
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import PredefinedSplit
-
 #KERAS es una API escrita en python que permite acceder a otros frameworks que desarrollan redes neuronales como TensorFlow.
 from keras.models import Sequential
 from keras import layers
-from keras.backend import clear_session
-from keras.engine.saving import load_model
 #Librería para plotear resultados de modelos.
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
@@ -32,28 +20,45 @@ from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 #Librerías para configuración de hiperparámetros.
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.model_selection import RandomizedSearchCV
 #Preprocesado de etiquetas
 from sklearn.preprocessing import LabelEncoder
 from keras.utils import np_utils
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import KFold
 from sklearn.model_selection import GridSearchCV
 #json
 import json
 #random
 import random
-import io
 #Guardar hiperparámetros
 from keras.callbacks import CSVLogger
 
 #VARIABLES GLOBALES DEL MODELO
+
+#Fichero de comentarios
 fichero_com = 'redNeuronal/data/comentarios_sin_duplicados.csv'
+
+#Máxima longitud de comentario
 maxlen = 200
+
+#Tamaño de embeddings
 embedding_dim = 100
+
+#Tamaño del vocabulario
 vocab_size = 0
+
+#Matriz de embedding preentrenados
 embedding_matrix = np.zeros((vocab_size, embedding_dim))
 
+#Tipo de red neuronal a entrenar.
+# 0: Red normal
+# 1: CNN
+# 2: LSTM
+tipo_red = 0
+
+#Ficheros de datos
+fichero_train = 'resultados_modelos/data/train_df.csv'
+fichero_validation =  'resultados_modelos/data/validation_df.csv'
+fichero_test =  'resultados_modelos/data/test_df.csv'
+fichero_embedding = 'redNeuronal/data/embeddings-m-model.vec'
 
 #Método para encontrar los vectores de un vocabulario dentro de un conjunto words embedding preentrenado.
 def create_embedding_matrix(filepath, word_index, embedding_dim):
@@ -132,11 +137,9 @@ def train_test_validation_split(df, categorias):
     return df_train,df_validation,df_test
 
 def main():
-
     #Se lee el fichero csv de comentarios
     df = pd.read_csv(fichero_com, names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria'], sep=',')
     #La primera fila son los nombres de las columnas
-    print(df)
     df = df.drop(0, axis=0)
     df.reset_index(drop=True, inplace=True)
     Y = df['categoria'].values[:]
@@ -145,20 +148,18 @@ def main():
     distribucion_clases = serie.value_counts()
     categorias = list(distribucion_clases.keys())
 
-    """
+    #Gráfica de tarta con la distribución por categorías.
     values = distribucion_clases.values
     plt.pie(values, autopct='%1.1f%%', labels=categorias)
     plt.title("Distribución de clases")
     plt.axis('equal')
     plt.show()
-    #Distribución
-    print(df['categoria'].value_counts())
-    """
-
+    
     # Codficar las variables de salida como enteros.
     encoder = LabelEncoder()
     encoder.fit(Y)
     encoded_Y = encoder.transform(Y)
+    
     # Convertir los enteros a variables dummy (one hot encoding)
     dummy_y = np_utils.to_categorical(encoded_Y)
     dummy_y = np.argmax(dummy_y, axis=-1) #Para que no esté en one hot encoding y ver métricas
@@ -169,20 +170,20 @@ def main():
     #Añadimos la columna dummy_y al dataFrame.
     df = df.assign(dummy_y = dummy_y)
     
-    if not os.path.isfile('resultados_modelos/data/train_df.csv'):
+    if not os.path.isfile(fichero_train):
         #Dividir el dataset en conjunto de training test y validacion
         train_df, validation_df, test_df = train_test_validation_split(df, categorias)
     else:
         print("Cargando conjuntos de datos...")
-        train_df = pd.read_csv('resultados_modelos/data/train_df.csv', names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
+        train_df = pd.read_csv(fichero_train, names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
         index_names = train_df[train_df['dummy_y'] == 'dummy_y'].index
         train_df.drop(index_names, inplace=True)
 
-        validation_df = pd.read_csv('resultados_modelos/data/validation_df.csv', names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
+        validation_df = pd.read_csv(fichero_validation, names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
         index_names = validation_df[validation_df['dummy_y'] == 'dummy_y'].index
         validation_df.drop(index_names, inplace=True)
 
-        test_df = pd.read_csv('resultados_modelos/data/test_df.csv', names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
+        test_df = pd.read_csv(fichero_test, names=['comentarios', 'id_comentarios', 'nombre_canal', 'categoria', 'dummy_y'], sep=',')
         index_names = test_df[test_df['dummy_y'] == 'X_test'].index
         test_df.drop(index_names, inplace=True)
 
@@ -200,9 +201,8 @@ def main():
     
     sentences_train = train_val_df['comentarios']
     y_train = train_val_df['dummy_y']
-    print(list(set(y_train)))
     sentences_test = test_df['comentarios']
-    y_test = test_df['dummy_y']
+    
     #Embedding words
     tokenizer = Tokenizer(num_words=60000)
     tokenizer.fit_on_texts(sentences_train)
@@ -211,10 +211,7 @@ def main():
     
     global vocab_size
     vocab_size = len(tokenizer.word_index) + 1  # Adding 1 because of reserved 0 index
-    print("el tamaño del vocabulario es: ",vocab_size)
-    print("el tamaño training antes tokenizar es: " , len(sentences_train))
-    print("El tamaño del conjunto de entrenamiento despues tokenizar: ", len(X_train))
-    print("Tamaño de y " , len(y_train))
+    print("El tamaño del vocabulario es: ",vocab_size)
 
     #Se añade un padding para que todas las frases se vean representadas por vectores del mismo tamaño.
     X_train = pad_sequences(X_train, padding='post', maxlen=maxlen)
@@ -227,18 +224,21 @@ def main():
     #Creamos la matriz con los vectores preentrenados de palabras 
     global embedding_matrix
     embedding_matrix = create_embedding_matrix(
-    'redNeuronal/data/embeddings-m-model.vec',
+    fichero_embedding,
     tokenizer.word_index, embedding_dim)
     nonzero_elements = np.count_nonzero(np.count_nonzero(embedding_matrix, axis=1))
-    print("Tamaño del vocabulario cubierto por nuestros vectores preentrenados " ,nonzero_elements / vocab_size)
+    print("Tamaño del vocabulario cubierto por vectores preentrenados: " ,nonzero_elements / vocab_size)
+
     #Entrenamiento
     estimator = KerasClassifier(build_fn=baseline_model, tipo=2, verbose=0)
     ps = PredefinedSplit(test_fold = splitCV)
     kfold = ps
+
     #Hiperparámetros
     optimizers = ['rmsprop' ,'adam'] #rmsprop  
-    epochs = [30,50,75] #30,50,75
-    batches = [256,512,1024] #256,512,1024
+    epochs = [30,50,75] 
+    batches = [256,512,1024] 
+
     #Entrenamiento parrilla de hiperparámetros
     param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches)
     grid = GridSearchCV(estimator=estimator, param_grid=param_grid, scoring='accuracy', cv=kfold, verbose =0, n_jobs=3, error_score = "raise") #Uso de todas las CPUs menos 2
@@ -247,11 +247,14 @@ def main():
     grid.fit(X_train, y_train,callbacks=[csv_logger])
     #Modelo
     estimator = grid.best_estimator_
+
+    #Mejores hiperparámetros
     print(grid.best_params_)
     print(grid.best_score_)
-    #Guardamos el modelo y guardamos el dataframe de test
+    
+    #Guardamos el modelo y guardamos el dataframe de test si no está guardado aún.
     estimator.model.save('model.h5')
-    if not os.path.isfile('resultados_modelos/data/train_df.csv'):
+    if not os.path.isfile(fichero_train):
         test_df.to_csv('test_df.csv', index=False,encoding='utf-8', sep= ',')
         train_df.to_csv('train_df.csv', index=False,encoding='utf-8', sep= ',')
         validation_df.to_csv('validation_df.csv', index=False,encoding='utf-8', sep= ',')

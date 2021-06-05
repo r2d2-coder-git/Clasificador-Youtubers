@@ -1,4 +1,3 @@
-
 # load numpy array from npy file
 import numpy as np
 import pandas as pd
@@ -9,9 +8,6 @@ from keras.utils import np_utils
 import sklearn.metrics as metrics
 #Contador 
 from collections import Counter
-import io
-
-from tensorflow.keras.preprocessing import text
 
 fichero_test = "resultados_modelos/data/test_df.csv"
 modelo_actual = "lstm"
@@ -40,18 +36,6 @@ def asignarEtiquetas(df):
         filas = df.loc[df['nombre_canal'] == canal]
         categoria = filas.categoria.unique()[0]
         fich_resultados.write("CANAL DE " + canal + " Categoria: " + categoria + '\n')
-        Y_test_string = np.array(filas.y_test_string)
-        clases_predichas_string = np.array(filas.predicciones_string)
-
-        #Matriz de confusión con los resultados de test, las clases predichas y métricas.
-        """
-        matrix = metrics.confusion_matrix(Y_test_string, clases_predichas_string)
-        fich_resultados.write("MATRIZ DE CONFUSIÓN:\n")
-        fich_resultados.write(np.array2string(matrix) + '\n\n')
-        fich_resultados.write("MÉTRICAS:\n")
-        metricas = metrics.classification_report(Y_test_string, clases_predichas_string, digits=3)
-        fich_resultados.write(metricas+ '\n')
-        """
         #Etiquetado del canal
         predicciones = np.array(filas.predicciones_string)
         num_comentarios = len(predicciones)
@@ -110,7 +94,7 @@ def main():
     clases_predichas = predicciones.argmax(axis=-1)
     #Precisión en el test y cambiar a one hot encoding para model.evaluate
     y_test_one_hot = np_utils.to_categorical(y_test)
-    score, accuracy_test = model.evaluate(X_test, y_test_one_hot, verbose = False)
+    _, accuracy_test = model.evaluate(X_test, y_test_one_hot, verbose = False)
     print("Testing Accuracy:  {:.4f}".format(accuracy_test))
 
     #Convertir las clases predichas en strings y las clases del dataframe también.
@@ -125,6 +109,7 @@ def main():
     #Analisis de los comentarios en global.
     matrix_comentarios = metrics.confusion_matrix(y_test_string, prediccion_string)
     report_comentarios = metrics.classification_report(y_test_string, prediccion_string, digits = 3)
+    #Añadir los resultados al fichero.
     fich_resultados = open('resultados.txt','a', encoding='utf-8')
     fich_resultados.write("MATRIZ DE CONFUSIÓN DE TODOS LOS COMENTARIOS DE TEST\n\n")
     fich_resultados.write(np.array2string(matrix_comentarios) + '\n\n')
