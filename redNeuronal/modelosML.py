@@ -60,6 +60,7 @@ fichero_validation =  'resultados_modelos/data/validation_df.csv'
 fichero_test =  'resultados_modelos/data/test_df.csv'
 fichero_embedding = 'redNeuronal/data/embeddings-m-model.vec'
 
+
 #Método para encontrar los vectores de un vocabulario dentro de un conjunto words embedding preentrenado.
 def create_embedding_matrix(filepath, word_index, embedding_dim):
     vocab_size = len(word_index) + 1  # Adding again 1 because of reserved 0 index
@@ -229,26 +230,28 @@ def main():
     nonzero_elements = np.count_nonzero(np.count_nonzero(embedding_matrix, axis=1))
     print("Tamaño del vocabulario cubierto por vectores preentrenados: " ,nonzero_elements / vocab_size)
 
-    #Entrenamiento
-    estimator = KerasClassifier(build_fn=baseline_model, tipo=2, verbose=0)
+    #Cross-validation
+    estimator = KerasClassifier(build_fn=baseline_model, tipo=0, verbose=0)
     ps = PredefinedSplit(test_fold = splitCV)
     kfold = ps
 
     #Hiperparámetros
-    optimizers = ['rmsprop' ,'adam'] #rmsprop  
+    optimizers = ['rmsprop','adam'] #rmsprop  
     epochs = [30,50,75] 
     batches = [256,512,1024] 
 
     #Entrenamiento parrilla de hiperparámetros
     param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches)
-    grid = GridSearchCV(estimator=estimator, param_grid=param_grid, scoring='accuracy', cv=kfold, verbose =0, n_jobs=3, error_score = "raise") #Uso de todas las CPUs menos 2
+    grid = GridSearchCV(estimator=estimator, param_grid=param_grid, scoring='accuracy', cv = kfold, verbose =0, n_jobs=3, error_score = "raise") #Uso de todas las CPUs menos 2
+    
     #Logger para guardar hiperparámetros
     csv_logger = CSVLogger('training.log', separator=',', append=False)
     grid.fit(X_train, y_train,callbacks=[csv_logger])
-    #Modelo
+    
+    #Mejor modelo
     estimator = grid.best_estimator_
 
-    #Mejores hiperparámetros
+    #Mejores hiperparámetros y precisión
     print(grid.best_params_)
     print(grid.best_score_)
     

@@ -116,14 +116,6 @@ def coger_id_upload(conn, id):
     return id, respuesta['items'][0]['contentDetails']['relatedPlaylists']['uploads'], nombre_canal
 
 
-# Función para coger la categoría de un canal
-def categoria_canal(conn, id_canal):
-    res = channels_response = conn.channels().list(
-        id=id_canal,
-        part="topicDetails"
-    ).execute()
-    return res['items'][0]['topicDetails']['topicCategories']
-
 # Función para coger los últimos num_videos por medio del identificador de subidas del canal de youtube.
 def coger_videos(conn, playlist_id, num_videos):
     id_videos = []
@@ -213,11 +205,6 @@ def write_to_csv(final, ):
         for row in final:
             comments_writer.writerow(row)
 
-# Quedarse con la última palabra de una url
-def ultima_palabra_url(url):
-    index = url.rfind('/')
-    return url[index+1:]
-
 # Definir si una cadena contiene urls
 def es_url(cadena):
     regex = re.compile(
@@ -229,34 +216,6 @@ def es_url(cadena):
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     match = re.findall(regex, cadena)
     return len(match) > 0
-
-# Concatenar las diferentes categorias de un canal
-def concatenar_categorias(list):
-    result = ''
-    for element in list:
-        result += str(element)+" "
-    return result
-
-# Coger urls de los ficheros
-def leer_canales(fich_canales):
-    f = open(fich_canales, "r")
-    lineas = f.readlines()
-    f.close()
-    return lineas
-
-# Aplanar listas de un solo nivel y listas de listas
-def aplanar_lista(lst):
-    return sum(lst, [])
-
-# Separar url y categoria
-def separar_info_canal(info):
-    if(info[-1] == '\n'):
-        url_categoria = info[:-1].split(sep=',')
-    else:
-        url_categoria = info.split(sep=',')
-    url = url_categoria[0]
-    categoria = url_categoria[1]
-    return url, categoria
 
 # Limpiar comentarios de emojis y otros simbolos
 def deEmojify(text):

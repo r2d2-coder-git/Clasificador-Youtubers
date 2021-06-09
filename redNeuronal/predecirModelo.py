@@ -8,9 +8,14 @@ from keras.utils import np_utils
 import sklearn.metrics as metrics
 #Contador 
 from collections import Counter
+#Visualización de matrices de confusión
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+import collections
 
 fichero_test = "resultados_modelos/data/test_df.csv"
-modelo_actual = "lstm"
+modelo_actual = "red_normal"
 
 #Convertir los elementos de una lista que son string en vectores con un formato específico.
 def string_to_vector(list_strings):
@@ -25,7 +30,7 @@ def string_to_vector(list_strings):
     return np.asarray(list_vector)
 
 #Función que asigna etiquetas a los canales y extrae metricas.
-def asignarEtiquetas(df):
+def asignarEtiquetas(df, prediccion_string):
     canales = df.nombre_canal.unique()
     fich_resultados = open('resultados.txt','w', encoding='utf-8')
     aciertos = 0
@@ -58,6 +63,8 @@ def asignarEtiquetas(df):
 
     fich_resultados.write("MATRIZ DE CONFUSION POR CANALES\n")
     matrix_canales = metrics.confusion_matrix(categorias_originales, categorias_predichas)
+    sns.heatmap(matrix_canales, annot=True, xticklabels=prediccion_string, yticklabels=prediccion_string)
+    plt.show()
     fich_resultados.write(np.array2string(matrix_canales) + '\n\n')
     report_canales = metrics.classification_report(categorias_originales, categorias_predichas, digits = 3)
     fich_resultados.write(report_canales+ '\n')
@@ -105,9 +112,16 @@ def main():
     test_df = test_df.assign(y_test_string=y_test_string,predicciones_string=prediccion_string,predicciones_int=clases_predichas)
 
     #Función que genera el fichero resultados.txt con la información de las predicciones por canal de youtube.
-    asignarEtiquetas(test_df)
+    od = collections.OrderedDict(sorted(topicos_encoded.items()))
+    topicos_sorted = [v for k,v in od.items()]
+    asignarEtiquetas(test_df, topicos_sorted)
     #Analisis de los comentarios en global.
     matrix_comentarios = metrics.confusion_matrix(y_test_string, prediccion_string)
+    sns.heatmap(matrix_comentarios, fmt = 'd', annot=True, xticklabels=topicos_sorted, yticklabels=topicos_sorted)
+    plt.show()
+    sns.heatmap(matrix_comentarios/np.sum(matrix_comentarios), annot=True, 
+            fmt='.2%', cmap='Blues', xticklabels=topicos_sorted, yticklabels=topicos_sorted)
+    plt.show()
     report_comentarios = metrics.classification_report(y_test_string, prediccion_string, digits = 3)
     #Añadir los resultados al fichero.
     fich_resultados = open('resultados.txt','a', encoding='utf-8')
